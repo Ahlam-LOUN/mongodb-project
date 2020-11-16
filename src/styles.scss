@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'variables';
+//  @import '../node_modules/font-awesome/scss/font-awesome';
+//  @import '../node_modules/font-awesome/css/font-awesome';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+$lt-gray: #ddd;
+$background-dark: #2b839e;
+$background-light: #eeeeee;
+$background-pale: #abe6f7;
+$primary-color-dark:  #2b839e;
+$primary-color:        #eeeeee;
+$primary-color-light:  #abe6f7;
+$primary-color-text:   #FFFFFF;
+$accent-color:         #FFC107;
+$primary-text-color:   #212121;
+$secondary-text-color: #757575;
+$divider-color:        #BDBDBD;
+
+@mixin zero-margin($pad-up-down, $pad-left-right) {
+    margin: 0px auto;
+    padding: $pad-up-down $pad-left-right;
+}
+
+
+
+
+.background-primary {
+    background-color: $background-dark!important;
+  }
+.background-accent {
+    background-color: $accent-color!important;
+  }
+.text-floral-white {
+    color: floralwhite!important;
+}
+
+.flex-spacer {
+  flex: 1 1 auto;
+}
+.highlight {
+  background-color: $background-pale;
+  border: 1px solid $primary-color-dark;
+  z-index: 1;
+  transform: scale(1.01);
+}

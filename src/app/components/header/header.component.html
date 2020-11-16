@@ -1,0 +1,37 @@
+
+<mat-toolbar class="active" >
+    <span><img src="/assets/images/irisi.png" height=30 width=41></span>
+    <a mat-button routerLink="/home" routerLinkActive="active"><span class="fa fa-home fa-lg"></span> Home</a>
+    <a mat-button  routerLink="/about" routerLinkActive="active"><span class="fa fa-info fa-lg"></span> About</a>
+    <a mat-button  routerLink="/menu" routerLinkActive="active"><span class="fa fa-list fa-lg"></span> Menu</a>
+    <a mat-button  routerLink="/contact" routerLinkActive="active"><span class="fa fa-address-card fa-lg"></span> Contact</a>
+    <span class="flex-spacer"></span>
+    <a mat-button (click)="openLoginForm()"><span class="fa fa-sign-in fa-lg"></span> Login</a>
+    <a mat-button (click)="openRegisterForm()"><span class="fa fa-sign-in fa-lg"></span>Sign Up</a>
+
+  </mat-toolbar>
+  
+  <div class="container jumbotron"
+      fxLayout="row"
+      fxLayout.sm="column" 
+      fxLayout.xs="column" 
+      fxLayoutAlign.xs="start center"
+      fxLayoutAlign.sm="start center" 
+      fxLayoutAlign.gt-sm="center center" 
+      fxLayoutGap="10px">
+  
+    <div fxFlex fxFlex.gt-sm="50%">
+      <h1 style="color: rgb(12, 56, 85)">Irisi Talent</h1>
+      <p style="color: rgb(54, 110, 148)">
+   
+        <i>
+        Talent Web est le premier réseau de talents digitaux en France.
+        Nos métiers : Talent Web accompagne les nouveaux talents dans le développement de leurs projets innovants et dans leurs collaborations avec les marques.
+        Nous construisons des dispositifs sur-mesure : du brief créatif au casting et à la production exécutive, nous guidons nos partenaires à travers chacune des étapes. 
+   </i>
+      </p>
+    </div>
+    <div fxFlex fxFlex.gt-sm="20%">
+      <img src="/assets/images/irisi.png" alt="Logo">
+    </div>
+  </div>
