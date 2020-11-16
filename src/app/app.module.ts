@@ -22,7 +22,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import 'hammerjs';
 import {MatSliderModule} from '@angular/material/slider'; 
 import {HttpClientModule} from '@angular/common/http'
-
+   
+import {AppRoutingModule} from './app-routing/app-routing/app-routing.module';
 
 
 import { HeaderComponent } from './components/header/header.component';
@@ -62,7 +63,8 @@ import { ContactComponent } from './components/contact/contact.component';
     MatSlideToggleModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
-    MatSliderModule
+    MatSliderModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent],

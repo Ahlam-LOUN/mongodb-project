@@ -7,7 +7,7 @@ import { routes } from './routes';
 
 @NgModule({
   declarations: [],
-  imports: [
+  imports: [ 
     CommonModule,
     RouterModule.forRoot(routes)
   ],
