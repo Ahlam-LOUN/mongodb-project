@@ -1,6 +1,6 @@
 import { Poste } from './poste';
 export class Utilisateur{
-    id_Utilisateur:string;
+     id_Utilisateur:string;
 	 nom:string;
 	 prenom:string;
 	 mail:string;
@@ -9,6 +9,8 @@ export class Utilisateur{
 	 universite:string;
      niveau:string;
      entreprise:string;
-     postes:  Poste[] ;
+	 postes:  Poste[] ;
+	 
+
 
 }

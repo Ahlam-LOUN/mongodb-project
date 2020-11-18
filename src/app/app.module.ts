@@ -1,10 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule } from '@angular/material/toolbar'; 
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import{MatListModule} from'@angular/material/list'
 import { MatCardModule } from '@angular/material/card';
@@ -20,18 +18,20 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import 'hammerjs';
-import {MatSliderModule} from '@angular/material/slider'; 
+import {MatSliderModule} from '@angular/material/slider';
 import {HttpClientModule} from '@angular/common/http'
-   
+import { MatRadioModule } from '@angular/material/radio';
 import {AppRoutingModule} from './app-routing/app-routing/app-routing.module';
-
-
 import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { PostesComponent } from './components/postes/postes.component';
+import { LightboxModule } from 'ngx-lightbox';
+import { WavesModule, ModalModule, CarouselModule } from 'angular-bootstrap-md';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -42,7 +42,8 @@ import { ContactComponent } from './components/contact/contact.component';
     FooterComponent,
     AboutComponent,
     ContactComponent,
-    
+    PostesComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -64,7 +65,13 @@ import { ContactComponent } from './components/contact/contact.component';
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatSliderModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatRadioModule,
+    LightboxModule,
+    WavesModule.forRoot(),
+    ModalModule.forRoot(),
+    CarouselModule.forRoot(),
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
