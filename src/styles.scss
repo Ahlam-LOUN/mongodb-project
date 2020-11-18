@@ -3,6 +3,7 @@
 //  @import '../node_modules/font-awesome/scss/font-awesome';
 //  @import '../node_modules/font-awesome/css/font-awesome';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~bootstrap/dist/css/bootstrap.css";
 
 $lt-gray: #ddd;
 $background-dark: #2b839e;
@@ -44,3 +45,5 @@ $divider-color:        #BDBDBD;
   z-index: 1;
   transform: scale(1.01);
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
