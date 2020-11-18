@@ -10,8 +10,11 @@ import {Lightbox} from "ngx-lightbox";
 export class PostesComponent implements OnInit {
   poste: Poste;
   constructor(private _lightbox: Lightbox) { }
-
+  domaine= "Préciser le domaine de votre projet ?";
   ngOnInit(): void {
   }
-
+  select (event: any) {
+    //update the ui
+    console.log(event.target.value);
+  }
 }
