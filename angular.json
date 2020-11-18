@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "mongodb-project"
+    }
+  },
+  "defaultProject": "mongodb-project",
+  "cli": {
+    "analytics": "12e229b5-e6c0-439c-92fc-fb9c3fe89ec7"
+  }
 }
