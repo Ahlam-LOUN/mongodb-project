@@ -33,7 +33,7 @@
               "./node_modules/ngx-lightbox/lightbox.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": ["node_modules/jquery/dist/jquery.min.js"]
           },
           "configurations": {
             "production": {
@@ -100,7 +100,7 @@
               "./node_modules/ngx-lightbox/lightbox.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": ["node_modules/jquery/dist/jquery.min.js"]
           }
         },
         "lint": {

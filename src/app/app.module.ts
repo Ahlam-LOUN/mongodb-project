@@ -32,6 +32,7 @@ import { PostesComponent } from './components/postes/postes.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { WavesModule, ModalModule, CarouselModule } from 'angular-bootstrap-md';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {MatExpansionModule, MatExpansionPanel} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -72,8 +73,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     ModalModule.forRoot(),
     CarouselModule.forRoot(),
     NgbModule,
+    MatExpansionModule
   ],
-  providers: [],
+  providers: [MatExpansionPanel],
   bootstrap: [AppComponent],
   entryComponents: [
     LoginComponent

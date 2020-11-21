@@ -14,59 +14,104 @@
   <div class="col-md-7" id="center" >
 
     <div class="offercard">
-
       <div class="poster offerelement" >
         <a class="a">
           <img src="">
-          <img src="">
         </a>
-        <span class="postername ">login</span>
+        <span class="postername ">Connected user</span>
       </div>
 
       <form >
         <div class="form-group">
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="Que voulez vous dire?"  name="statutIsolement"></textarea>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="Que voulez vous dire?" [(ngModel)] ="poste.contenu"  name="statutIsolement" ></textarea>
+          <div class="attachments">
+            <h4>Attacher un fichier :</h4>
+            <ul>
+              <li>
+                <i class="fa fa-music"></i>
+                <label class="fileContainer">
+                  <input type="file" accept="audio/*" (change)="onChange($event)" >
+                </label>
+              </li>
+              <li>
+                <i class="fa fa-image"></i>
+                <label class="fileContainer">
+                  <input type="file" accept="image/*" (change)="onChange($event)">
+                </label>
+              </li>
+              <li>
+                <i class="fa fa-video-camera"></i>
+                <label class="fileContainer">
+                  <input type="file" accept="video/*" (change)="onChange($event)">
+                </label>
+              </li>
+              <li>
+                <i class="fa fa-file-pdf-o"></i>
+                <label class="fileContainer">
+                  <input type="file" accept="application/pdf" (change)="onChange($event)">
+                </label>
+              </li>
+            </ul>
+          </div>
+          <div class="blocks">
+            <div class="dropdown">
+              <select class="browser-default custom-select" name="categorie" [(ngModel)]="poste.categorie">
+                <option selected>Spécifier le domaine de votre idée ?</option>
+                <option value="IOT">IOT</option>
+                <option value="AI">AI</option>
+                <option value="BI">BI</option>
+              </select>
+            </div>
+          </div>
         </div>
       </form>
-      <hr>
-      <div class="offerelement" ><a class="myButton">Publier</a>
+      <div class="offerelement" ><a class="myButton" (click)="addPoste()">Publier</a>
       </div>
     </div>
 
     <!-- repeted one -->
-    <div class="offercard">
-
+    <div *ngFor="let utilisateur of utilisateurs">
+    <div class="offercard" *ngFor="let poste of utilisateur.postes" >
       <div class="poster offerelement">
-        <img src="">
-        <img src="">
-        <span class="postername ">login</span>
+        <img src="../../assets/postes/images/icons/usertest.png">
+        <span class="postername">{{utilisateur.nom}} {{utilisateur.prenom}}</span>
       </div>
       <div class="offerelement ">
-        <span>test</span>
+        <span>{{poste.datePoste}}</span>
         <br>
         <br>
-        <div class="post-thumb-gallery">
+        <div class="post-thumb-gallery" *ngIf="poste.type == 'image'"  >
           <figure class="post-thumb img-popup">
-              <img src="assets/postes/images/post-1.jpg" alt="post image">
+              <img src="../../assets/postes/images/post-1.jpg" alt="post image">
           </figure>
         </div>
-        <div class="post-thumb-gallery">
+        <div class="" *ngIf="poste.type == 'pdf'" >
+          <figure class="">
+              <a href="poste.lien" style="text-decoration: none;" alt="post image">{{poste.lien}}</a>
+          </figure>
+        </div>
+        <div class="post-thumb-gallery" *ngIf="poste.type == 'video'" >
           <figure class="post-thumb img-popup">
             <div class="embed-responsive embed-responsive-21by9">
               <video width="320" height="240" controls>
-                <source src="assets/postes/videos/3%20%20Tp%20angular%20creation%20projet.mp4" type="video/mp4">
+                <source src="../../assets/postes/videos/3%20%20Tp%20angular%20creation%20projet.mp4" type="video/mp4">
               </video>
             </div>
           </figure>
         </div>
+        <div class="post-thumb-gallery" *ngIf="poste.type == 'audio'" >
+
+              <audio width="420" height="240" controls>
+                <source src="../../assets/postes/videos/3%20%20Tp%20angular%20creation%20projet.mp4" type="video/mp4">
+              </audio>
+        </div>
       </div>
       <div class="panel-group">
-        <button data-toggle="collapse" data-target="#demo">Collapsible</button>
         <div class="panel panel-default">
           <div class="panel-heading">
             <div class="offerelement">
               <div class="we-video-info">
-                <ul>
+                <ul class="post-bare">
                   <li>
 															<span class="views" data-toggle="tooltip" title="views">
 																<i class="fa fa-eye"></i>
@@ -75,7 +120,7 @@
                   </li>
                   <li>
 															<span class="comments" data-toggle="tooltip" title="Comments">
-																<a href="#"><i class="fa fa-comments-o"></i></a>
+																<a><i class="fa fa-comments-o"></i></a>
 																<ins>52</ins>
 															</span>
                   </li>
@@ -94,15 +139,15 @@
                 </ul>
               </div>
             </div>
-            <hr>
           </div>
-          <div id="collapse1" class="panel-collapse collapse">
+          <div>
             <div class="panel-body">
-
               <div class="commentarea">
+                <hr>
                 <div class="comment">
-                  <img class="commentimg" src="" style="margin-top: -12px;" >
-
+                  <br>
+                  <br>
+                  <img class="commentimg" src="" style="margin-top: -12px;">
                   <span>Test</span>
 
                 </div>
@@ -138,7 +183,7 @@
 
 
     </div>
-
+  </div>
     <!-- repeted one -->
 
 
@@ -157,7 +202,7 @@
             <div class="profile-thumb">
               <a href="#">
                 <figure class="profile-thumb-small">
-                  <img src="assets/images/profile/profile-small-9.jpg" alt="Cat_img">
+                  <img src="assets/postes/images/icons/cercle.png" alt="Cat_img" height="20" width="20">
                 </figure>
               </a>
             </div>
@@ -172,7 +217,7 @@
             <div class="profile-thumb">
               <a href="#">
                 <figure class="profile-thumb-small">
-                  <img src="assets/images/profile/profile-small-35.jpg" alt="Cat_img">
+                  <img src="assets/postes/images/icons/sound.png" alt="Cat_img" height="20" width="20">
                 </figure>
               </a>
             </div>
