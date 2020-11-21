@@ -2,13 +2,13 @@ import { Commentaire } from "./commentaire";
 import { Reaction } from "./reaction";
 
 export class Poste{
+    etape:String;
     datePoste:String;
     contenu:String;
     lien:String;
     type: String;
     categorie:String;
-    commentaires: Commentaire[];
-    reactions:Reaction[];
+    commentaires: Array<Commentaire> = new Array<Commentaire>();
+    reactions:Array<Reaction> = new Array<Reaction>();
     fichierNom:String;
-
 }

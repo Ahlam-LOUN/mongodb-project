@@ -10,7 +10,7 @@ import { Utilisateur } from 'src/app/models/utilisateur';
 })
 export class PostesComponent implements OnInit {
   poste: Poste = new Poste();
-  utilisateurs: Array<Utilisateur>
+  utilisateurs: Array<Utilisateur>;
   id:String = "5fb62fdaceb6362153e2a2b8";
   file:File;
   domaine= "Préciser le domaine de votre projet ?";
@@ -23,18 +23,16 @@ export class PostesComponent implements OnInit {
         console.log(this.utilisateurs)
     });
   }
-  onChange(event){
-    this.file=event.target.value;
-    console.log(this.file);
-    console.log(this.poste.contenu);
-    console.log(this.poste.categorie);
+  ///cette methode recupere le fichier choisie par l'utilisateur.
+  onChange(files: FileList){
+    this.file=files.item(0);
   }
-
+   ///ctte methode fait apelle au methode addposte dans posteservice
   addPoste(){
-    this.posteservice.addPoste(this.id,this.poste,this.file).subscribe((data)=>{
-      console.log(data);
-    })
+   //this.posteservice.addPoste(this.id,this.poste,this.file)
+   this.posteservice.getPiece("UseCase.PNG").subscribe((data)=>{
+     console.log(data);
+   })
   }
-
-
+  
 }

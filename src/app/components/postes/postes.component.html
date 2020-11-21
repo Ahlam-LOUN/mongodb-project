@@ -30,25 +30,25 @@
               <li>
                 <i class="fa fa-music"></i>
                 <label class="fileContainer">
-                  <input type="file" accept="audio/*" (change)="onChange($event)" >
+                  <input type="file" accept="audio/*" (change)="onChange($event.target.files)" >
                 </label>
               </li>
               <li>
                 <i class="fa fa-image"></i>
                 <label class="fileContainer">
-                  <input type="file" accept="image/*" (change)="onChange($event)">
+                  <input type="file" accept="image/*" (change)="onChange($event.target.files)" >
                 </label>
               </li>
               <li>
                 <i class="fa fa-video-camera"></i>
                 <label class="fileContainer">
-                  <input type="file" accept="video/*" (change)="onChange($event)">
+                  <input type="file" accept="video/*" (change)="onChange($event.target.files)" >
                 </label>
               </li>
               <li>
                 <i class="fa fa-file-pdf-o"></i>
                 <label class="fileContainer">
-                  <input type="file" accept="application/pdf" (change)="onChange($event)">
+                  <input type="file" accept="application/pdf" (change)="onChange($event.target.files)" >
                 </label>
               </li>
             </ul>
