@@ -64,7 +64,7 @@ $background-moredark: #2b839e;
 }
 p{
 
-  text-align: center;
+  text-align: left;
   font-family:arial ;
   font-size: 14px;
   font-weight: 600;
@@ -448,6 +448,10 @@ textarea:focus, input:focus, .uneditable-input:focus {
 }
 .a {
   cursor: pointer;
+  color: #2b839e;
+  font-size: 14px;
+  font-weight: 500;
+  text-shadow: 1px 1px 2px #c2c3c4;
 }
 
 .post-thumb-gallery {
@@ -964,4 +968,57 @@ for some reason nth-child(1) is always busy and elements starting from 2 */
 .attachments h4{
   float: left;
   color: $background-moredark;
+}
+.cat{
+  width: 100%;
+}
+
+/* Border */
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: white;
+}
+/* Font color */
+input.mat-input-element {
+  color: white;
+}
+
+.myClickableThingy {
+  cursor: pointer;
+}
+
+.Financer{
+  background:linear-gradient(to left, $background-dark, $background-dark);
+  margin-left: 10px;
+  border-radius: 15px;
+  border: 0px solid;
+  cursor:pointer;
+  font-family:Arial;
+  font-size:14px;
+  text-decoration:none;
+  height: 50px;
+  align-items: center;
+  padding-right:15%;
+  padding-left:15%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 6px;
+  color: white;
+
+
+}
+
+.Financer:hover {
+  border-color: $background-light;
+  color:$background-dark;
+  background:white;
+  border: 1px solid;
+
+}
+
+.Etat{
+  float: right;
+  margin-left: 300px;
+  color:$background-dark;
+  font-family: Roboto;
+  font-size: 16px;
 }

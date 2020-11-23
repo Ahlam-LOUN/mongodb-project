@@ -33,6 +33,7 @@ import { LightboxModule } from 'ngx-lightbox';
 import { WavesModule, ModalModule, CarouselModule } from 'angular-bootstrap-md';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatExpansionModule, MatExpansionPanel} from '@angular/material/expansion';
+import { AccueilComponent } from './components/accueil/accueil.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import {MatExpansionModule, MatExpansionPanel} from '@angular/material/expansion
     AboutComponent,
     ContactComponent,
     PostesComponent,
+    AccueilComponent,
 
   ],
   imports: [

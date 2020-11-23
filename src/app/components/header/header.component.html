@@ -4,8 +4,15 @@
     <a mat-button  routerLink="/about" routerLinkActive="active"><span class="fa fa-info fa-lg"></span>   Qui sommes-nous!</a>
     <a mat-button  routerLink="/contact" routerLinkActive="active"><span class="fa fa-address-card fa-lg"></span>   Nous connectez</a>
     <span class="flex-spacer"></span>
-    <a mat-button (click)="openLoginForm()"><span class="fa fa-sign-in fa-lg"></span>  Se connecter</a>
-    <a mat-button (click)="openRegisterForm()"><span class="fa fa-sign-in fa-lg"></span  >Register</a>
+    <div *ngIf="testLogin()==true; then thenBlock else elseBlock"></div>
+    <ng-template #thenBlock>
+      <a mat-button (click)="versAccueil()"><span class="fa fa-sign-out fa-lg" aria-hidden="true"></span>  Se deconneceter</a>
+
+    </ng-template>
+    <ng-template #elseBlock>
+      <a mat-button (click)="openLoginForm()"><span class="fa fa-sign-in fa-lg"></span>  Se connecter</a>
+      <a mat-button (click)="openRegisterForm()"><span class="fa fa-sign-in fa-lg"></span  >Register</a>
+    </ng-template>
 
   </mat-toolbar>
 

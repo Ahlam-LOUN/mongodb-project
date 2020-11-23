@@ -2,11 +2,10 @@
 <div class="row">
   <div class="col-md-2" id="leftsidebar">
     <div class="insidleftbar">
-      <h3 class="title">Profiles Actives:</h3>
-      <div class="blocks">
-        <img src="" class="commentimg">
-        <img src="" class="commentimg" >
-        <h3><a class="a" >login</a></h3>
+      <h3 class="title">Profiles Actifs:</h3>
+      <div class="blocks" *ngFor="let utilisateursActif of this.utilisateursActifs">
+        <img src="assets/postes/images/icons/user.png" class="commentimg">
+        <h4><a class="a">{{utilisateursActif.prenom}}</a></h4>
       </div>
     </div>
   </div>
@@ -16,9 +15,9 @@
     <div class="offercard">
       <div class="poster offerelement" >
         <a class="a">
-          <img src="">
+          <img src="assets/postes/images/icons/user.png">
         </a>
-        <span class="postername ">Connected user</span>
+        <span class="postername ">{{this.currentUser.prenom}} {{this.currentUser.nom}}</span>
       </div>
 
       <form >
@@ -53,14 +52,19 @@
               </li>
             </ul>
           </div>
-          <div class="blocks">
+          <div>
             <div class="dropdown">
-              <select class="browser-default custom-select" name="categorie" [(ngModel)]="poste.categorie">
-                <option selected>Spécifier le domaine de votre idée ?</option>
-                <option value="IOT">IOT</option>
-                <option value="AI">AI</option>
-                <option value="BI">BI</option>
-              </select>
+              <mat-form-field appearance="fill" class="cat">
+                <mat-label>Domaine de projet ?</mat-label>
+                  <select matNativeControl required>
+                    <option value="IOT">IOT</option>
+                    <option value="AI">AI</option>
+                    <option value="BI">BI</option>
+                    <option value="Devloppement Mobile">Devloppement Mobile</option>
+                    <option value="Devloppement Web">Devloppement Web</option>
+                    <option value="Autres">Autres</option>
+                  </select>
+                </mat-form-field>
             </div>
           </div>
         </div>
@@ -73,16 +77,22 @@
     <div *ngFor="let utilisateur of utilisateurs">
     <div class="offercard" *ngFor="let poste of utilisateur.postes" >
       <div class="poster offerelement">
-        <img src="../../assets/postes/images/icons/usertest.png">
+        <img src="assets/postes/images/icons/user.png">
         <span class="postername">{{utilisateur.nom}} {{utilisateur.prenom}}</span>
+        <span class="Etat">étape de projet: {{poste.etape}}</span>
       </div>
       <div class="offerelement ">
-        <span>{{poste.datePoste}}</span>
+        <span>posté le: {{poste.datePoste}}</span>
+        <br>
+        <br>
+        <div class="post-thumb-gallery" >
+          <p>{{poste.contenu}}</p>
+        </div>
         <br>
         <br>
         <div class="post-thumb-gallery" *ngIf="poste.type == 'image'"  >
           <figure class="post-thumb img-popup">
-              <img src="../../assets/postes/images/post-1.jpg" alt="post image">
+              <img src="assets/postes/images/post-1.jpg" alt="post image">
           </figure>
         </div>
         <div class="" *ngIf="poste.type == 'pdf'" >
@@ -136,6 +146,11 @@
 																<ins>200</ins>
 															</span>
                   </li>
+                  <li>
+                    <div *ngIf="currentUser.entreprise && currentUser.entreprise != ''">
+                      <div class="displayitems" ><a class="Financer" (click)="this.miseAjourPoste(utilisateur.id_Utilisateur,poste)">  Financer  </a></div>
+                    </div>
+                    </li>
                 </ul>
               </div>
             </div>
@@ -202,14 +217,13 @@
             <div class="profile-thumb">
               <a href="#">
                 <figure class="profile-thumb-small">
-                  <img src="assets/postes/images/icons/cercle.png" alt="Cat_img" height="20" width="20">
+                  <img src="assets/postes/images/icons/IOT.png" alt="Cat_img" height="20" width="20">
                 </figure>
               </a>
             </div>
             <!-- profile picture end -->
-
             <div class="unorder-list-info">
-              <h3 class="list-title"><a href="#">IOT</a></h3>
+              <h3 class="list-title"><a class="myClickableThingy" (click)="this.getByPosteCategorie('IOT')">IOT</a></h3>
             </div>
           </li>
           <li class="unorder-list">
@@ -217,14 +231,74 @@
             <div class="profile-thumb">
               <a href="#">
                 <figure class="profile-thumb-small">
-                  <img src="assets/postes/images/icons/sound.png" alt="Cat_img" height="20" width="20">
+                  <img src="assets/postes/images/icons/IA.png" alt="Cat_img" height="20" width="20">
                 </figure>
               </a>
             </div>
             <!-- profile picture end -->
 
             <div class="unorder-list-info">
-              <h3 class="list-title"><a href="#">IA</a></h3>
+              <h3 class="list-title"><a class="myClickableThingy" (click)="this.getByPosteCategorie('AI')">IA</a></h3>
+            </div>
+          </li>
+          <li class="unorder-list">
+            <!-- profile picture end -->
+            <div class="profile-thumb">
+              <a href="#">
+                <figure class="profile-thumb-small">
+                  <img src="assets/postes/images/icons/BI.png" alt="Cat_img" height="20" width="20">
+                </figure>
+              </a>
+            </div>
+            <!-- profile picture end -->
+
+            <div class="unorder-list-info">
+              <h3 class="list-title"><a class="myClickableThingy" (click)="this.getByPosteCategorie('BI')">BI</a></h3>
+            </div>
+          </li>
+          <li class="unorder-list">
+            <!-- profile picture end -->
+            <div class="profile-thumb">
+              <a href="#">
+                <figure class="profile-thumb-small">
+                  <img src="assets/postes/images/icons/mobile.png" alt="Cat_img" height="20" width="20">
+                </figure>
+              </a>
+            </div>
+            <!-- profile picture end -->
+
+            <div class="unorder-list-info">
+              <h3 class="list-title"><a class="myClickableThingy" (click)="this.getByPosteCategorie('Développement Mobile')">Développement Mobile</a></h3>
+            </div>
+          </li>
+          <li class="unorder-list">
+            <!-- profile picture end -->
+            <div class="profile-thumb">
+              <a href="#">
+                <figure class="profile-thumb-small">
+                  <img src="assets/postes/images/icons/web.png" alt="Cat_img" height="20" width="20">
+                </figure>
+              </a>
+            </div>
+            <!-- profile picture end -->
+
+            <div class="unorder-list-info">
+              <h3 class="list-title"><a class="myClickableThingy" (click)="this.getByPosteCategorie('Développement Web')">Développement Web</a></h3>
+            </div>
+          </li>
+          <li class="unorder-list">
+            <!-- profile picture end -->
+            <div class="profile-thumb">
+              <a href="#">
+                <figure class="profile-thumb-small">
+                  <img src="assets/postes/images/icons/other.png" alt="Cat_img" height="20" width="20">
+                </figure>
+              </a>
+            </div>
+            <!-- profile picture end -->
+
+            <div class="unorder-list-info">
+              <h3 class="list-title"><a class="myClickableThingy" (click)="this.getByPosteCategorie('Autres')">Autres</a></h3>
             </div>
           </li>
         </ul>
