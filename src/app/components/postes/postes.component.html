@@ -135,13 +135,13 @@
                   </li>
                   <li>
 															<span class="like" data-toggle="tooltip" title="like" >
-																<i class="fa fa-heart-o" (click)=" reactionType(event)"></i>
+																<i class="fa fa-heart-o" (click)=" addReaction(utilisateur.id_Utilisateur,poste.datePoste,event)"></i>
 																<ins>{{countRactionsLike(utilisateur.id_Utilisateur,poste.datePoste)}}</ins>
 															</span>
                   </li>
                   <li>
 															<span class="dislike" data-toggle="tooltip" title="dislike">
-																<i class="fa fa-thumbs-o-down" (click)="reactionType(event)"></i>
+																<i class="fa fa-thumbs-o-down" (click)=" addReaction(utilisateur.id_Utilisateur,poste.datePoste,event)"></i>
 																<ins>{{countRactionsDislike(utilisateur.id_Utilisateur,poste.datePoste)}}</ins>
 															</span>
                   </li>

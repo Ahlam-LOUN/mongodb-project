@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Poste} from "../../models/poste";
-import {Reaction} from 'src/app/models/Reaction';
+import {Reaction} from 'src/app/models/reaction';
 import {Lightbox} from "ngx-lightbox";
 import {PosteService} from "../../services/poste.service"
 import { Utilisateur } from 'src/app/models/utilisateur';
@@ -48,9 +48,7 @@ export class PostesComponent implements OnInit {
 
     this.commentaire.contenu = event.target.value;
   }
-  reactionType(event) {
-   this.reaction.type= event.target.value;
-  }
+ 
   addCommentaire(idUtilisateur,datePoste){
     console.log("dzcdcsdc"+idUtilisateur);
     this.commentateur.id_Utilisateur = this.id;
@@ -62,6 +60,7 @@ export class PostesComponent implements OnInit {
   }
   countRactionsLike(idUtilisateur:String,datePoste:string):number{
     this.posteservice.countRactionsLike(idUtilisateur,datePoste).subscribe((data)=>{
+        console.log("data"+data);
           return data;
     })
     return 0;
@@ -69,6 +68,7 @@ export class PostesComponent implements OnInit {
    countRactionsDislike(idUtilisateur:String,datePoste:string):number{
     this.posteservice.countRactionsDislike(idUtilisateur,datePoste).subscribe((data)=>{
           return data;
+          console.log("data"+data);
     })
     return 0;
    }
@@ -79,7 +79,8 @@ export class PostesComponent implements OnInit {
     return 0;
    }
    
-   addReaction(idUtilisateur:String,datePoste:String){
+   addReaction(idUtilisateur:String,datePoste:String,event){
+    this.reaction.type= event.target.value;
     console.log("dzcdcsdc"+idUtilisateur);
     this.reactif.id_Utilisateur = this.id;
     this.reaction.reactif = this.reactif;
