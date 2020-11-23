@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import {Poste} from "../models/poste"
 import { Utilisateur } from '../models/utilisateur';
 import {UploadfileResponse} from "../models/uploadfile-response"
-import { formatDate } from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
@@ -25,6 +24,7 @@ export class PosteService {
     this.storeFile(file).subscribe((data)=>{
       poste.type = data.fileType;
       poste.fichierNom = data.fileName;
+      console.log( poste.fichierNom);
       poste.lien = data.fileDownloadUri;
       console.log("lllllllllllllllllllll");
       this.http.post<Poste>(this.Url+"/poste/"+id,poste).subscribe((data)=>{
@@ -40,14 +40,14 @@ export class PosteService {
     formData.append('file', file);    
     return this.http.post<UploadfileResponse>(this.Url1,formData);
   }
-getPiece(fileName:String):Observable<any>{
-  const httpOptions = {
-    headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    })
-};
-   return this.http.get<any>(this.Url1+"/"+fileName,httpOptions);
-}
+  countRactionsLike(idUtilisateur:String,datePoste:string):Observable<number>{
+   return this.http.get<number>(this.Url+"/countlikeReactions?idUtilisateur="+idUtilisateur+"&datePoste="+datePoste);
+  }
+  countRactionsDislike(idUtilisateur:String,datePoste:string):Observable<number>{
+    return this.http.get<number>(this.Url+"/countdislikeReactions?idUtilisateur="+idUtilisateur+"&datePoste="+datePoste);
+   }
+  countCommentaires(idUtilisateur:String,datePoste:string){
+    return this.http.get<number>(this.Url+"/countCommentaires?idUtilisateur="+idUtilisateur+"&datePoste="+datePoste);
+  }
 
 }

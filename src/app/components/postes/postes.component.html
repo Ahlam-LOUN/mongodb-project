@@ -75,34 +75,43 @@
       <div class="poster offerelement">
         <img src="../../assets/postes/images/icons/usertest.png">
         <span class="postername">{{utilisateur.nom}} {{utilisateur.prenom}}</span>
+        <br>
+        <span>Etape: {{poste.etape}}</span>
+        
       </div>
-      <div class="offerelement ">
-        <span>{{poste.datePoste}}</span>
+      <div class="offerelement  " style="margin: 5px 0px 5px 0px;">
+        <span class="postername" >{{poste.categorie}}</span>
+        
         <br>
+        <span style="padding: 5px 0px 5px 0px;">Date Poste: {{poste.datePoste}}</span>
         <br>
-        <div class="post-thumb-gallery" *ngIf="poste.type == 'image'"  >
+        <div class="poster offerelement" style="margin: 8px 0px 8px 0px;">
+          <div>{{poste.contenu}}</div>
+        </div>
+        
+        <br>
+        <div class="post-thumb-gallery" *ngIf="poste.type == 'image/png'"  >
           <figure class="post-thumb img-popup">
-              <img src="../../assets/postes/images/post-1.jpg" alt="post image">
+              <img src="../../assets/pieces/{{poste.fichierNom}}" alt="post image">
           </figure>
         </div>
-        <div class="" *ngIf="poste.type == 'pdf'" >
+        <div class="" *ngIf="poste.type == 'application/pdf'" >
           <figure class="">
-              <a href="poste.lien" style="text-decoration: none;" alt="post image">{{poste.lien}}</a>
+              <a href="poste.lien" style="text-decoration: none;text-align: center;" alt="post image" style="margin: 5px 0px 5px 0px;">clicker ici pour telecherger le document</a>
           </figure>
         </div>
-        <div class="post-thumb-gallery" *ngIf="poste.type == 'video'" >
+        <div class="post-thumb-gallery" *ngIf="poste.type == 'video/mp4'" >
           <figure class="post-thumb img-popup">
             <div class="embed-responsive embed-responsive-21by9">
               <video width="320" height="240" controls>
-                <source src="../../assets/postes/videos/3%20%20Tp%20angular%20creation%20projet.mp4" type="video/mp4">
+                <source src="../../assets/pieces/{{poste.fichierNom}}" type="video/mp4">
               </video>
             </div>
           </figure>
         </div>
-        <div class="post-thumb-gallery" *ngIf="poste.type == 'audio'" >
-
+        <div class="post-thumb-gallery" *ngIf="poste.type == 'audio/mpeg'" >
               <audio width="420" height="240" controls>
-                <source src="../../assets/postes/videos/3%20%20Tp%20angular%20creation%20projet.mp4" type="video/mp4">
+                <source src="../../assets/pieces/{{poste.fichierNom}}" type="video/mp4">
               </audio>
         </div>
       </div>
@@ -121,19 +130,19 @@
                   <li>
 															<span class="comments" data-toggle="tooltip" title="Comments">
 																<a><i class="fa fa-comments-o"></i></a>
-																<ins>52</ins>
+																<ins>{{countCommentaires(utilisateur.id_Utilisateur,poste.datePoste)}}</ins>
 															</span>
                   </li>
                   <li>
-															<span class="like" data-toggle="tooltip" title="like">
-																<i class="fa fa-heart-o"></i>
-																<ins>2.2k</ins>
+															<span class="like" data-toggle="tooltip" title="like" >
+																<i class="fa fa-heart-o" (click)=" reactionType(event)"></i>
+																<ins>{{countRactionsLike(utilisateur.id_Utilisateur,poste.datePoste)}}</ins>
 															</span>
                   </li>
                   <li>
 															<span class="dislike" data-toggle="tooltip" title="dislike">
-																<i class="fa fa-thumbs-o-down"></i>
-																<ins>200</ins>
+																<i class="fa fa-thumbs-o-down" (click)="reactionType(event)"></i>
+																<ins>{{countRactionsDislike(utilisateur.id_Utilisateur,poste.datePoste)}}</ins>
 															</span>
                   </li>
                 </ul>
@@ -144,37 +153,36 @@
             <div class="panel-body">
               <div class="commentarea">
                 <hr>
-                <div class="comment">
+                <div >
+                <div class="comment" *ngFor="let commente of poste.commentaires" >
                   <br>
+                  <img class="commentimg" src="../../../assets/postes/images/icons/usertest.png" style="margin-top: -12px;">
+                  <span style="width: 200px;" >{{commente.commentateur.nom}} {{commente.commentateur.prenom}}</span>
                   <br>
-                  <img class="commentimg" src="" style="margin-top: -12px;">
-                  <span>Test</span>
-
+                  <span style="width: 200px;" >{{commente.dateCommentaire}}</span>
+                  
+                  <span style="width: 200px;" class="card">{{commente.contenu}}</span>
                 </div>
+              </div>
                 <div class="addcomment">
                   <div class="displayitems" >
 
                     <img class="commentimg" src="" style=" margin-bottom: -15px;" >
 
-
                   </div>
                   <div class="displayitems">
                     <form>
                       <div class="form-group ">
-                        <input class="form-control commentinput " type="text" placeholder="Ajouter un commentaire" name="commentaire">
+                        <input class="form-control commentinput " type="text" placeholder="Ajouter un commentaire" name="commentaire" (keyup)="change($event)" >
 
                       </div>
                     </form>
                   </div>
-                  <div class="displayitems" ><a class="addcommentN" id="addcomment" >Envoyer</a>
+                  <div class="displayitems" ><a class="addcommentN" id="addcomment" (click)="addCommentaire(utilisateur.id_Utilisateur,poste.datePoste)" >Envoyer</a>
                   </div>
 
                 </div>
-
-
               </div>
-
-
 
             </div>
           </div>
