@@ -1,6 +1,7 @@
 import { Poste } from './poste';
 export class Utilisateur{
-     id_Utilisateur:string;
+	active:boolean;
+     id_Utilisateur:String;
 	 nom:string;
 	 datePoste:String;
 	 prenom:string;
@@ -11,7 +12,5 @@ export class Utilisateur{
      niveau:string;
      entreprise:string;
 	 postes:  Poste[] ;
-	 
-
 
 }

@@ -14,15 +14,14 @@ export class PostesComponent implements OnInit {
   utilisateurs: Array<Utilisateur>;
   utilisateursActifs: Array<Utilisateur>;
   currentUser: Utilisateur;
-  id:String = "5fba8df9f4131931a094aa40";
   file:File;
   constructor(private _lightbox: Lightbox,private posteservice:PosteService, private Utilisateurservice:UtilisateurService) {
     this.utilisateurs = new Array<Utilisateur>();
   }
   ngOnInit(): void {
     this.posteservice.getAllPostes().subscribe((data)=>{
-        this.utilisateurs = data;
-        console.log(this.utilisateurs)
+      this.utilisateurs = data;
+      console.log(this.utilisateurs)
     });
     this.posteservice.getByOrderPostes().subscribe((data)=>{
       this.utilisateursActifs = data;
@@ -40,7 +39,7 @@ export class PostesComponent implements OnInit {
 
   ///ctte methode fait apelle au methode addposte dans posteservice
   addPoste(){
-    this.posteservice.addPoste(this.id,this.poste,this.file)
+    this.posteservice.addPoste(this.currentUser.id_Utilisateur,this.poste,this.file)
     /*this.posteservice.getPiece("UseCase.PNG").subscribe((data)=>{
       console.log(data);
     })*/
@@ -63,7 +62,7 @@ export class PostesComponent implements OnInit {
     poste.etape="Financé";
     console.log(poste);
     this.posteservice.miseAjourPoste(idUser,poste).subscribe(data=>{
-      console.log(poste);
+        console.log(poste);
       }
     );
   }

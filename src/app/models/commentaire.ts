@@ -3,7 +3,4 @@ export class Commentaire{
     contenu :String;
     dateCommentaire:String;
     commentateur: Utilisateur;
-   
-
-
 }
