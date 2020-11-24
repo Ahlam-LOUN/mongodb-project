@@ -10,10 +10,10 @@
       </div>
     </div>
 
-    <div class="col-md-7" id="center" >
+    <div class="col-md-7" id="center">
 
-      <div class="offercard">
-        <div class="poster offerelement" >
+      <div class="offercard" *ngIf="!currentUser.entreprise || currentUser.entreprise == ''">
+        <div class="poster offerelement">
           <a class="a">
             <img src="assets/postes/images/icons/user.png">
           </a>
@@ -79,10 +79,10 @@
           <div class="poster offerelement">
             <img src="assets/postes/images/icons/user.png">
             <span class="postername">{{utilisateur.nom}} {{utilisateur.prenom}}</span>
-            <span class="Etat">étape de projet: {{poste.etape}}</span>
+            <span class="Etat"><i class="fa fa-line-chart fa-lg etape"></i> {{poste.etape}}</span>
           </div>
           <div class="offerelement ">
-            <span>posté le: {{poste.datePoste}}</span>
+            <span style="padding: 5px 0px 5px 0px;">posté le: {{poste.datePoste}}</span>
             <br>
             <br>
             <div class="post-thumb-gallery" >
@@ -90,29 +90,28 @@
             </div>
             <br>
             <br>
-            <div class="post-thumb-gallery" *ngIf="poste.type == 'image'"  >
+            <div class="post-thumb-gallery" *ngIf="poste.type == 'image/jpeg'">
               <figure class="post-thumb img-popup">
-                <img src="assets/postes/images/post-1.jpg" alt="post image">
+                <img src="../../assets/pieces/{{poste.fichierNom}}" alt="post image">
               </figure>
             </div>
-            <div class="" *ngIf="poste.type == 'pdf'" >
+            <div class="" *ngIf="poste.type == 'application/pdf'" >
               <figure class="">
-                <a href="poste.lien" style="text-decoration: none;" alt="post image">{{poste.lien}}</a>
+                <a href="poste.lien" style="text-decoration: none;text-align: center;" alt="post image" style="margin: 5px 0px 5px 0px;">clicker ici pour telecherger le document</a>
               </figure>
             </div>
-            <div class="post-thumb-gallery" *ngIf="poste.type == 'video'" >
+            <div class="post-thumb-gallery" *ngIf="poste.type == 'video/mp4'" >
               <figure class="post-thumb img-popup">
                 <div class="embed-responsive embed-responsive-21by9">
                   <video width="320" height="240" controls>
-                    <source src="../../assets/postes/videos/3%20%20Tp%20angular%20creation%20projet.mp4" type="video/mp4">
+                    <source src="../../assets/pieces/{{poste.fichierNom}}" type="video/mp4">
                   </video>
                 </div>
               </figure>
             </div>
-            <div class="post-thumb-gallery" *ngIf="poste.type == 'audio'" >
-
+            <div class="post-thumb-gallery" *ngIf="poste.type == 'audio/mpeg'" >
               <audio width="420" height="240" controls>
-                <source src="../../assets/postes/videos/3%20%20Tp%20angular%20creation%20projet.mp4" type="video/mp4">
+                <source src="../../assets/pieces/{{poste.fichierNom}}" type="video/mp4">
               </audio>
             </div>
           </div>
@@ -125,25 +124,25 @@
                       <li>
 															<span class="views" data-toggle="tooltip" title="views">
 																<i class="fa fa-eye"></i>
-																<ins>1.2k</ins>
+																<ins>1</ins>
 															</span>
                       </li>
                       <li>
 															<span class="comments" data-toggle="tooltip" title="Comments">
 																<a><i class="fa fa-comments-o"></i></a>
-																<ins>52</ins>
+																<ins>{{poste.commentaires.length}}</ins>
 															</span>
                       </li>
                       <li>
-															<span class="like" data-toggle="tooltip" title="like">
-																<i class="fa fa-heart-o"></i>
-																<ins>2.2k</ins>
+															<span class="like" data-toggle="tooltip" title="like" >
+																<i class="fa fa-heart-o" (click)=" addReaction(utilisateur.id_Utilisateur,poste.datePoste,event)"></i>
+																<ins>{{poste.reactions.length}}</ins>
 															</span>
                       </li>
                       <li>
 															<span class="dislike" data-toggle="tooltip" title="dislike">
-																<i class="fa fa-thumbs-o-down"></i>
-																<ins>200</ins>
+																<i class="fa fa-thumbs-o-down" (click)=" addReaction(utilisateur.id_Utilisateur,poste.datePoste,event)"></i>
+																<ins>0</ins>
 															</span>
                       </li>
                       <li>
@@ -159,44 +158,40 @@
                 <div class="panel-body">
                   <div class="commentarea">
                     <hr>
-                    <div class="comment">
-                      <br>
-                      <br>
-                      <img class="commentimg" src="" style="margin-top: -12px;">
-                      <span>Test</span>
-
+                    <div>
+                      <div class="comment" *ngFor="let commente of poste.commentaires" >
+                        <br>
+                        <img class="commentimg" src="assets/postes/images/icons/comment.png" style="margin-top: -12px;">
+                        <span style="width: 200px;" class="a">{{commente.commentateur.nom}} {{commente.commentateur.prenom}} <span *ngIf="commente.commentateur.entreprise">({{commente.commentateur.entreprise}})</span></span>
+                        <br>
+                        <span style="width: 200px;" >{{commente.dateCommentaire}}</span>
+                        <span style="width: 200px;" class="card">{{commente.contenu}}</span>
+                      </div>
                     </div>
                     <div class="addcomment">
                       <div class="displayitems" >
 
-                        <img class="commentimg" src="" style=" margin-bottom: -15px;" >
-
+                        <img class="commentimg" src="assets/postes/images/icons/user.png" style=" margin-bottom: -15px;" >
 
                       </div>
                       <div class="displayitems">
                         <form>
                           <div class="form-group ">
-                            <input class="form-control commentinput " type="text" placeholder="Ajouter un commentaire" name="commentaire">
+                            <input class="form-control commentinput " type="text" placeholder="Ajouter un commentaire" name="commentaire" (keyup)="change($event)" >
 
                           </div>
                         </form>
                       </div>
-                      <div class="displayitems" ><a class="addcommentN" id="addcomment" >Envoyer</a>
+                      <div class="displayitems" ><a class="addcommentN" id="addcomment" (click)="addCommentaire(utilisateur.id_Utilisateur,poste.datePoste)" >Envoyer</a>
                       </div>
 
                     </div>
-
-
                   </div>
-
-
 
                 </div>
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
       <!-- repeted one -->
