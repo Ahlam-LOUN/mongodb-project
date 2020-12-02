@@ -3,9 +3,9 @@
     <div class="col-md-2" id="leftsidebar">
       <div class="insidleftbar">
         <h3 class="title">Profiles Actifs:</h3>
-        <div class="blocks" *ngFor="let utilisateursActif of this.utilisateursActifs">
+        <div class="blocks" *ngFor="let utilisaetur of utilisateursActifs" >
           <img src="assets/postes/images/icons/user.png" class="commentimg">
-          <h4><a class="a">{{utilisateursActif.prenom}}</a></h4>
+          <h4><a class="a">{{utilisaetur.nom}} {{utilisaetur.prenom}}</a></h4>
         </div>
       </div>
     </div>
@@ -29,25 +29,25 @@
                 <li>
                   <i class="fa fa-music"></i>
                   <label class="fileContainer">
-                    <input type="file" accept="audio/*" (change)="onChange($event.target.files)" >
+                    <input type="file" accept="audio/*" (change)="onfileChange($event.target.files)" >
                   </label>
                 </li>
                 <li>
                   <i class="fa fa-image"></i>
                   <label class="fileContainer">
-                    <input type="file" accept="image/*" (change)="onChange($event.target.files)" >
+                    <input type="file" accept="image/*" (change)="onfileChange($event.target.files)" >
                   </label>
                 </li>
                 <li>
                   <i class="fa fa-video-camera"></i>
                   <label class="fileContainer">
-                    <input type="file" accept="video/*" (change)="onChange($event.target.files)" >
+                    <input type="file" accept="video/*" (change)="onfileChange($event.target.files)" >
                   </label>
                 </li>
                 <li>
                   <i class="fa fa-file-pdf-o"></i>
                   <label class="fileContainer">
-                    <input type="file" accept="application/pdf" (change)="onChange($event.target.files)" >
+                    <input type="file" accept="application/pdf" (change)="onfileChange($event.target.files)" >
                   </label>
                 </li>
               </ul>
@@ -56,7 +56,7 @@
               <div class="dropdown">
                 <mat-form-field appearance="fill" class="cat">
                   <mat-label>Domaine de projet ?</mat-label>
-                  <select matNativeControl required>
+                    <select matNativeControl required (change)="domaineChange($event)">
                     <option value="IOT">IOT</option>
                     <option value="AI">AI</option>
                     <option value="BI">BI</option>
@@ -74,11 +74,10 @@
       </div>
 
       <!-- repeted one -->
-      <div *ngFor="let utilisateur of utilisateurs">
-        <div class="offercard" *ngFor="let poste of utilisateur.postes" >
+        <div class="offercard" *ngFor="let poste of postes" >
           <div class="poster offerelement">
             <img src="assets/postes/images/icons/user.png">
-            <span class="postername">{{utilisateur.nom}} {{utilisateur.prenom}}</span>
+            <span class="postername">{{poste.posteur.nom}} {{poste.posteur.prenom}}</span>
             <span class="Etat"><i class="fa fa-line-chart fa-lg etape"></i> {{poste.etape}}</span>
           </div>
           <div class="offerelement ">
@@ -90,14 +89,14 @@
             </div>
             <br>
             <br>
-            <div class="post-thumb-gallery" *ngIf="poste.type == 'image/jpeg'">
+            <div class="post-thumb-gallery" *ngIf="poste.type == 'image/jpeg' || poste.type == 'image/png'">
               <figure class="post-thumb img-popup">
                 <img src="../../assets/pieces/{{poste.fichierNom}}" alt="post image">
               </figure>
             </div>
             <div class="" *ngIf="poste.type == 'application/pdf'" >
               <figure class="">
-                <a href="poste.lien" style="text-decoration: none;text-align: center;" alt="post image" style="margin: 5px 0px 5px 0px;">clicker ici pour telecherger le document</a>
+                <a href="" style="text-decoration: none;text-align: center;" alt="post image" style="margin: 5px 0px 5px 0px;">clicker ici pour telecherger le document</a>
               </figure>
             </div>
             <div class="post-thumb-gallery" *ngIf="poste.type == 'video/mp4'" >
@@ -135,19 +134,19 @@
                       </li>
                       <li>
 															<span class="like" data-toggle="tooltip" title="like" >
-																<i class="fa fa-heart-o" (click)=" addReaction(utilisateur.id_Utilisateur,poste.datePoste,event)"></i>
+																<i class="fa fa-heart-o" >addreaction</i>
 																<ins>{{poste.reactions.length}}</ins>
 															</span>
                       </li>
                       <li>
 															<span class="dislike" data-toggle="tooltip" title="dislike">
-																<i class="fa fa-thumbs-o-down" (click)=" addReaction(utilisateur.id_Utilisateur,poste.datePoste,event)"></i>
+																<i class="fa fa-thumbs-o-down" >addreaction</i>
 																<ins>0</ins>
 															</span>
                       </li>
                       <li>
                         <div *ngIf="currentUser.entreprise && currentUser.entreprise != ''">
-                          <div class="displayitems" ><a class="Financer" (click)="this.miseAjourPoste(utilisateur.id_Utilisateur,poste)">  Financer  </a></div>
+                          <div class="displayitems" ><a class="Financer" (click)="this.miseAjourPoste(poste)">  Financer  </a></div>
                         </div>
                       </li>
                     </ul>
@@ -177,14 +176,12 @@
                       <div class="displayitems">
                         <form>
                           <div class="form-group ">
-                            <input class="form-control commentinput " type="text" placeholder="Ajouter un commentaire" name="commentaire" (keyup)="change($event)" >
-
+                            <input class="form-control commentinput " type="text" placeholder="Ajouter un commentaire" name="commentaire" (keyup)="Commentairechange($event)" >
                           </div>
                         </form>
                       </div>
-                      <div class="displayitems" ><a class="addcommentN" id="addcomment" (click)="addCommentaire(utilisateur.id_Utilisateur,poste.datePoste)" >Envoyer</a>
+                      <div class="displayitems" ><a class="addcommentN" id="addcomment" (click)="addCommentaire(poste.idPoste)" >Envoyer</a>
                       </div>
-
                     </div>
                   </div>
 
@@ -193,10 +190,7 @@
             </div>
           </div>
         </div>
-      </div>
       <!-- repeted one -->
-
-
     </div>
 
     <div class="col-md-3" id="rightsidebar">

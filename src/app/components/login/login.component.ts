@@ -10,14 +10,14 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
   user = {username: '', password: '', remember: false};
-  constructor(private router: Router,public dialogRef: MatDialogRef<LoginComponent>,private Utilisateurservice:UtilisateurService) { }
+  constructor(private router: Router, public dialogRef: MatDialogRef<LoginComponent>, private Utilisateurservice:UtilisateurService) { }
 
   ngOnInit(): void {
     console.log('User: ', this.user);
     // this.dialogRef.close();
   }
   login(){
-    localStorage.setItem('connectedUser',this.user.username);
+    localStorage.setItem('connectedUser', this.user.username);
     this.router.navigate(['postes']);
   }
 
