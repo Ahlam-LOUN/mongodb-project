@@ -7,10 +7,10 @@ import { Commentaire } from '../models/commentaire';
   providedIn: 'root'
 })
 export class CommentaireService {
-  Url = "http://localhost:8090/Utilisateurs";
+  Url = "http://localhost:8090/commentaires";
   constructor(private http:HttpClient) { }
 
-addCommentaire(idUtilisateur:String,datePoste:String,commentaire:Commentaire):Observable<Commentaire>{
-  return this.http.post<Commentaire>(this.Url+"/commentaire?idUtilisateur="+idUtilisateur+"&datePoste="+datePoste,commentaire);
+addCommentaire(idPoste:number,commentaire:Commentaire):Observable<Commentaire>{
+  return this.http.post<Commentaire>(this.Url+"/commentaire/"+idPoste,commentaire);
 }
 }

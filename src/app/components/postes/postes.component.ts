@@ -8,6 +8,7 @@ import {Commentaire} from "../../models/commentaire";
 import {Reaction} from "../../models/reaction";
 import {CommentaireService} from "../../services/commentaire.service";
 import {ReactionService} from "../../services/reaction.service";
+import {newArray} from "@angular/compiler/src/util";
 @Component({
   selector: 'app-postes',
   templateUrl: './postes.component.html',
@@ -17,7 +18,8 @@ export class PostesComponent implements OnInit {
   poste: Poste = new Poste();
   utilisateurs: Array<Utilisateur>;
   utilisateursActifs: Array<Utilisateur>;
-  currentUser: Utilisateur;
+  currentUser: Utilisateur = new Utilisateur();
+  postes: Array<Poste>;
   file:File;
   commentaire:Commentaire = new Commentaire();
   commentateur:Utilisateur = new Utilisateur();
@@ -30,12 +32,8 @@ export class PostesComponent implements OnInit {
   }
   ngOnInit(): void {
     this.posteservice.getAllPostes().subscribe((data)=>{
-      this.utilisateurs = data;
+      this.postes = data;
       console.log(this.utilisateurs)
-    });
-    this.posteservice.getByOrderPostes().subscribe((data)=>{
-      this.utilisateursActifs = data;
-      console.log(this.utilisateursActifs)
     });
     this.Utilisateurservice.getByMail(localStorage.getItem('connectedUser')).subscribe((data)=>{
       this.currentUser = data;
@@ -49,7 +47,7 @@ export class PostesComponent implements OnInit {
 
   ///ctte methode fait apelle au methode addposte dans posteservice
   addPoste(){
-    this.posteservice.addPoste(this.currentUser.id_Utilisateur,this.poste,this.file);
+    this.posteservice.addPoste(this.currentUser.idUtilisateur,this.poste,this.file);
   }
   change(event) {
 
@@ -57,8 +55,8 @@ export class PostesComponent implements OnInit {
   }
   getByPosteCategorie(categorie: String){
     this.posteservice.getByPosteCategorie(categorie).subscribe((data)=>{
-      this.utilisateurs = data;
-      console.log(this.utilisateurs)
+      this.postes = data;
+      console.log(this.postes)
     });
   }
 
@@ -69,54 +67,88 @@ export class PostesComponent implements OnInit {
     });
   }
 
-  miseAjourPoste(idUser: string, poste:Poste){
+  miseAjourPoste(poste:Poste){
     poste.etape="Financé par "+this.currentUser.entreprise;
     console.log(poste);
-    this.posteservice.miseAjourPoste(idUser,poste).subscribe(data=>{
+    this.posteservice.miseAjourPoste(poste).subscribe(data=>{
         console.log(poste);
       }
     );
   }
 
-  addCommentaire(idUtilisateur,datePoste){
-    console.log("dzcdcsdc"+idUtilisateur);
-    this.commentateur.id_Utilisateur = this.currentUser.id_Utilisateur;
+  addCommentaire(idPoste: number){
+    console.log("dzcdcsdc"+idPoste);
+    this.commentateur.idUtilisateur = this.currentUser.idUtilisateur;
     this.commentaire.commentateur = this.commentateur;
-    this.commentaireservce.addCommentaire(idUtilisateur,datePoste,this.commentaire).subscribe((data)=>{
+    this.commentaireservce.addCommentaire(idPoste,this.commentaire).subscribe((data)=>{
       this.ngOnInit();
       console.log(data);
     })
   }
-  countRactionsLike(idUtilisateur:String,datePoste:string):number{
-    this.posteservice.countRactionsLike(idUtilisateur,datePoste).subscribe((data)=>{
-      console.log("data"+data);
-      return data;
-    })
-    return 0;
+  countRactionsLike(poste: Poste):number{
+    let like = 0;
+
+    for (let r of poste.reactions){
+      if (r.type == "Like"){
+        like++;
+      }
+    }
+    return like;
   }
-  countRactionsDislike(idUtilisateur:String,datePoste:string):number{
-    this.posteservice.countRactionsDislike(idUtilisateur,datePoste).subscribe((data)=>{
-      return data;
-      console.log("data"+data);
-    })
-    return 0;
-  }
-  countCommentaires(idUtilisateur:String,datePoste:string):number{
-    this.posteservice.countCommentaires(idUtilisateur,datePoste).subscribe((data)=>{
-      return data;
-    })
-    return 0;
+  countRactionsDislike(poste: Poste):number{
+    let dislike = 0;
+    for (let r of poste.reactions){
+      if (r.type == "Dislike"){
+        dislike++;
+      }
+    }
+    return dislike;
   }
 
-  addReaction(idUtilisateur:String,datePoste:String,event){
-    this.reaction.type= event.target.value;
-    console.log("dzcdcsdc"+idUtilisateur);
-    this.reactif.id_Utilisateur = this.currentUser.id_Utilisateur;
-    this.reaction.reactif = this.reactif;
-    this.reactionservice.addReaction(idUtilisateur,datePoste,this.reaction).subscribe((data)=>{
-      this.ngOnInit();
-      console.log(data);
-    })
-
+  addReaction(poste:Poste,type:string){
+    if (this.VerifierReactif(poste) == "pas"){
+      this.reaction.type= type;
+      console.log(this.currentUser);
+      this.reactif.idUtilisateur = this.currentUser.idUtilisateur;
+      this.reaction.reactif = this.reactif;
+      this.reactionservice.addReaction(poste.idPsote,this.reaction).subscribe((data)=>{
+        this.ngOnInit();
+        console.log("aucune reaction"+data);
+      });
+    }
+    else{
+    if (this.VerifierReactif(poste) == type){
+      this.reactionservice.deleteReaction(+localStorage.getItem('idReaction')).subscribe((data)=>{
+        this.ngOnInit();
+        console.log("supp data == type"+data);
+      });
+    }
+    else {
+      console.log("else else");
+      // ajouter recation
+      this.reaction.type= type;
+      this.reactif.idUtilisateur = this.currentUser.idUtilisateur;
+      this.reaction.reactif = this.reactif;
+      this.reactionservice.addReaction(poste.idPsote,this.reaction).subscribe((data)=>{
+        this.ngOnInit();
+        console.log("ajout when data =! type"+data);
+        //supprimer reaction
+        this.reactionservice.deleteReaction(+localStorage.getItem('idReaction')).subscribe((data)=>{
+          this.ngOnInit();
+          console.log("supp when data =! type"+data);
+        });
+      });
+    }
+    }
+  }
+  VerifierReactif(poste: Poste):string{
+    let res = "pas"
+      for(let r of poste.reactions){
+        if(r.reactif.idUtilisateur == this.currentUser.idUtilisateur){
+          res= r.type;
+          localStorage.setItem('idReaction',''+r.idReaction);
+        }
+      }
+      return res;
   }
 }

@@ -74,11 +74,11 @@
       </div>
 
       <!-- repeted one -->
-      <div *ngFor="let utilisateur of utilisateurs">
-        <div class="offercard" *ngFor="let poste of utilisateur.postes" >
+      <div *ngFor="let poste of postes">
+        <div class="offercard" >
           <div class="poster offerelement">
             <img src="assets/postes/images/icons/user.png">
-            <span class="postername">{{utilisateur.nom}} {{utilisateur.prenom}}</span>
+            <span class="postername">{{poste.posteur.nom}} {{poste.posteur.prenom}}</span>
             <span class="Etat"><i class="fa fa-line-chart fa-lg etape"></i> {{poste.etape}}</span>
           </div>
           <div class="offerelement ">
@@ -135,19 +135,19 @@
                       </li>
                       <li>
 															<span class="like" data-toggle="tooltip" title="like" >
-																<i class="fa fa-heart-o" (click)=" addReaction(utilisateur.id_Utilisateur,poste.datePoste,event)"></i>
-																<ins>{{poste.reactions.length}}</ins>
+																<i class="fa fa-heart-o" (click)=" addReaction(poste,'Like')"></i>
+																<ins>{{countRactionsLike(poste)}}</ins>
 															</span>
                       </li>
                       <li>
 															<span class="dislike" data-toggle="tooltip" title="dislike">
-																<i class="fa fa-thumbs-o-down" (click)=" addReaction(utilisateur.id_Utilisateur,poste.datePoste,event)"></i>
-																<ins>0</ins>
+																<i class="fa fa-thumbs-o-down" (click)=" addReaction(poste,'Dislike')"></i>
+																<ins>{{countRactionsDislike(poste)}}</ins>
 															</span>
                       </li>
                       <li>
                         <div *ngIf="currentUser.entreprise && currentUser.entreprise != ''">
-                          <div class="displayitems" ><a class="Financer" (click)="this.miseAjourPoste(utilisateur.id_Utilisateur,poste)">  Financer  </a></div>
+                          <div class="displayitems" ><a class="Financer" (click)="this.miseAjourPoste(poste)">  Financer  </a></div>
                         </div>
                       </li>
                     </ul>
@@ -182,7 +182,7 @@
                           </div>
                         </form>
                       </div>
-                      <div class="displayitems" ><a class="addcommentN" id="addcomment" (click)="addCommentaire(utilisateur.id_Utilisateur,poste.datePoste)" >Envoyer</a>
+                      <div class="displayitems" ><a class="addcommentN" id="addcomment" (click)="addCommentaire(poste.idPoste)" >Envoyer</a>
                       </div>
 
                     </div>

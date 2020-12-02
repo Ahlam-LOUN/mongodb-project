@@ -1,7 +1,7 @@
 import { Poste } from './poste';
 export class Utilisateur{
 	active:boolean;
-     id_Utilisateur:String;
+	idUtilisateur:number;
 	 nom:string;
 	 datePoste:String;
 	 prenom:string;
