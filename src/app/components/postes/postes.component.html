@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row">
-    <div class="col-md-2" id="leftsidebar">
+    <div class="col-md-3" id="leftsidebar">
       <div class="insidleftbar">
         <h3 class="title">Profiles Actifs:</h3>
         <div class="blocks" *ngFor="let utilisaetur of utilisateursActifs" >
@@ -10,8 +10,7 @@
       </div>
     </div>
 
-    <div class="col-md-7" id="center">
-
+    <div class="col-md-6" id="center">
       <div class="offercard" *ngIf="!currentUser.entreprise || currentUser.entreprise == ''">
         <div class="poster offerelement">
           <a class="a">
@@ -60,7 +59,7 @@
                     <option value="IOT">IOT</option>
                     <option value="AI">AI</option>
                     <option value="BI">BI</option>
-                    <option value="Devloppement Mobile">Devloppement Mobile</option>
+                    <option value="Développement Mobile">Devloppement Mobile</option>
                     <option value="Devloppement Web">Devloppement Web</option>
                     <option value="Autres">Autres</option>
                   </select>
@@ -74,7 +73,8 @@
       </div>
 
       <!-- repeted one -->
-        <div class="offercard" *ngFor="let poste of postes" >
+      <div *ngFor="let poste of postes">
+        <div class="offercard" >
           <div class="poster offerelement">
             <img src="assets/postes/images/icons/user.png">
             <span class="postername">{{poste.posteur.nom}} {{poste.posteur.prenom}}</span>
@@ -96,7 +96,7 @@
             </div>
             <div class="" *ngIf="poste.type == 'application/pdf'" >
               <figure class="">
-                <a href="" style="text-decoration: none;text-align: center;" alt="post image" style="margin: 5px 0px 5px 0px;">clicker ici pour telecherger le document</a>
+                <i class="fa fa-file-pdf-o mx-2 fa-2x" (click)="downloadFile(poste.fichierNom)"> </i><a  style="text-decoration: none;text-align: center;" alt="post image" style="margin: 5px 0px 5px 0px;color: dodgerblue" >telecherger le document</a>
               </figure>
             </div>
             <div class="post-thumb-gallery" *ngIf="poste.type == 'video/mp4'" >
@@ -134,14 +134,18 @@
                       </li>
                       <li>
 															<span class="like" data-toggle="tooltip" title="like" >
-																<i class="fa fa-heart-o" >addreaction</i>
-																<ins>{{poste.reactions.length}}</ins>
+
+																<i class="fa fa-heart-o" (click)=" addReaction(poste,'Like')"></i>
+																<ins>{{countRactionsLike(poste)}}</ins>
+
 															</span>
                       </li>
                       <li>
 															<span class="dislike" data-toggle="tooltip" title="dislike">
-																<i class="fa fa-thumbs-o-down" >addreaction</i>
-																<ins>0</ins>
+
+																<i class="fa fa-thumbs-o-down" (click)=" addReaction(poste,'Dislike')"></i>
+																<ins>{{countRactionsDislike(poste)}}</ins>
+
 															</span>
                       </li>
                       <li>
@@ -190,6 +194,7 @@
             </div>
           </div>
         </div>
+      </div>
       <!-- repeted one -->
     </div>
 

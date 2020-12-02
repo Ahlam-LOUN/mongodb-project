@@ -6,10 +6,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ReactionService {
-  Url = "http://localhost:8090/Utilisateurs";
+  Url = "http://localhost:8090/reactions";
   constructor(private http:HttpClient) { }
-  
-addReaction(idUtilisateur:String,datePoste:String,reaction:Reaction):Observable<Reaction>{
-  return this.http.post<Reaction>(this.Url+"/reaction?idUtilisateur="+idUtilisateur+"&datePoste="+datePoste,reaction);
-}
+
+  addReaction(idPoste:number,reaction:Reaction):Observable<Reaction>{
+    return this.http.post<Reaction>(this.Url+"/idPoste/"+idPoste,reaction);
+  }
+  deleteReaction(idReaction: number){
+    return this.http.delete<Reaction>(this.Url+"/id/"+idReaction);
+  }
+  getReaction(idReaction: number){
+    return this.http.get<Reaction>(this.Url+"/{id}?id="+idReaction);
+  }
 }

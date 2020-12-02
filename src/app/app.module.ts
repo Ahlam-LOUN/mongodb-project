@@ -34,6 +34,7 @@ import { WavesModule, ModalModule, CarouselModule } from 'angular-bootstrap-md';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatExpansionModule, MatExpansionPanel} from '@angular/material/expansion';
 import { AccueilComponent } from './components/accueil/accueil.component';
+import { ProfilComponent } from './components/profil/profil.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { AccueilComponent } from './components/accueil/accueil.component';
     ContactComponent,
     PostesComponent,
     AccueilComponent,
+    ProfilComponent,
 
   ],
   imports: [
