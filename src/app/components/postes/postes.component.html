@@ -17,7 +17,7 @@
           <a class="a">
             <img src="assets/postes/images/icons/user.png">
           </a>
-          <span class="postername ">{{this.currentUser.prenom}} {{this.currentUser.nom}}</span>
+          <span class="postername " (click)="this.toProfil()">{{this.currentUser.prenom}} {{this.currentUser.nom}}</span>
         </div>
 
         <form >

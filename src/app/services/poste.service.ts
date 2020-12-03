@@ -17,6 +17,11 @@ export class PosteService {
     return this.http.get<Array<Poste>>(this.Url);
   }
 
+  ///cette methode ermet de recupere les postes par posteur
+  getPostesByMail(mail: String):Observable<Array<Poste>>{
+    return this.http.get<Array<Poste>>(this.Url+"/mail/"+mail);
+  }
+
   ///cette methode permet de recupere tous les utilisateur par cat du poste
   getByPosteCategorie(categorie: String):Observable<Array<Poste>>{
     return this.http.get<Array<Poste>>(this.Url+"/categorie/"+categorie);

@@ -15,4 +15,7 @@ addReaction(idPoste:number,reaction:Reaction):Observable<Reaction>{
 deleteReaction(idReaction: number){
   return this.http.delete<Reaction>(this.Url+"/id/"+idReaction);
 }
+getReaction(idReaction: number){
+   return this.http.get<Reaction>(this.Url+"/{id}?id="+idReaction);
+}
 }

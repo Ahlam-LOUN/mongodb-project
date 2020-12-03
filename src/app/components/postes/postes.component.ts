@@ -9,6 +9,7 @@ import {Reaction} from "../../models/reaction";
 import {CommentaireService} from "../../services/commentaire.service";
 import {ReactionService} from "../../services/reaction.service";
 import {newArray} from "@angular/compiler/src/util";
+import {Router} from "@angular/router";
 @Component({
   selector: 'app-postes',
   templateUrl: './postes.component.html',
@@ -24,16 +25,16 @@ export class PostesComponent implements OnInit {
   commentaire:Commentaire = new Commentaire();
   commentateur:Utilisateur = new Utilisateur();
   reaction:Reaction = new Reaction();
-  reactif:Utilisateur = new Utilisateur();
+  reactif:Utilisateur= new Utilisateur();
 
   constructor(private _lightbox: Lightbox,private posteservice:PosteService, private Utilisateurservice:UtilisateurService
-  ,private commentaireservce:CommentaireService, private reactionservice:ReactionService) {
-    this.utilisateurs = new Array<Utilisateur>();
+  ,private commentaireservce:CommentaireService, private reactionservice:ReactionService, private  router: Router) {
+    this.postes = new Array<Poste>();
   }
   ngOnInit(): void {
     this.posteservice.getAllPostes().subscribe((data)=>{
       this.postes = data;
-      console.log(this.utilisateurs)
+      console.log(this.postes)
     });
     this.Utilisateurservice.getByMail(localStorage.getItem('connectedUser')).subscribe((data)=>{
       this.currentUser = data;
@@ -111,7 +112,7 @@ export class PostesComponent implements OnInit {
       console.log(this.currentUser);
       this.reactif.idUtilisateur = this.currentUser.idUtilisateur;
       this.reaction.reactif = this.reactif;
-      this.reactionservice.addReaction(poste.idPsote,this.reaction).subscribe((data)=>{
+      this.reactionservice.addReaction(poste.idPoste,this.reaction).subscribe((data)=>{
         this.ngOnInit();
         console.log("aucune reaction"+data);
       });
@@ -129,7 +130,7 @@ export class PostesComponent implements OnInit {
       this.reaction.type= type;
       this.reactif.idUtilisateur = this.currentUser.idUtilisateur;
       this.reaction.reactif = this.reactif;
-      this.reactionservice.addReaction(poste.idPsote,this.reaction).subscribe((data)=>{
+      this.reactionservice.addReaction(poste.idPoste,this.reaction).subscribe((data)=>{
         this.ngOnInit();
         console.log("ajout when data =! type"+data);
         //supprimer reaction
@@ -142,13 +143,20 @@ export class PostesComponent implements OnInit {
     }
   }
   VerifierReactif(poste: Poste):string{
+    console.log("verifierReaction");
     let res = "pas"
       for(let r of poste.reactions){
-        if(r.reactif.idUtilisateur == this.currentUser.idUtilisateur){
-          res= r.type;
-          localStorage.setItem('idReaction',''+r.idReaction);
-        }
+          console.log(r.reactif.idUtilisateur);
+          console.log(this.currentUser.idUtilisateur);
+          if(r.reactif.idUtilisateur == this.currentUser.idUtilisateur){
+            res= r.type;
+            localStorage.setItem('idReaction',''+r.idReaction);
+            console.log(this.currentUser.idUtilisateur);
+          }
       }
       return res;
+  }
+  toProfil(){
+    this.router.navigate(['profil']);
   }
 }

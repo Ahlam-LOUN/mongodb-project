@@ -3,7 +3,7 @@ import { Reaction } from "./reaction";
 import {Utilisateur} from "./utilisateur";
 
 export class Poste{
-    idPsote: number;
+    idPoste: number;
     etape:String;
     datePoste:String;
     contenu:String;

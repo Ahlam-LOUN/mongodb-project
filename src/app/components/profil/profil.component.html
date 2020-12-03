@@ -1,0 +1,290 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8" id="center">
+      <div class="offercard" *ngIf="!currentUser.entreprise || currentUser.entreprise == ''">
+        <div class="poster offerelement">
+          <a class="a">
+            <img src="assets/postes/images/icons/user.png">
+          </a>
+          <span class="postername ">{{this.currentUser.prenom}} {{this.currentUser.nom}}</span>
+        </div>
+
+        <form >
+          <div class="form-group">
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="Que voulez vous dire?" [(ngModel)] ="poste.contenu"  name="statutIsolement" ></textarea>
+            <div class="attachments">
+              <h4>Attacher un fichier :</h4>
+              <ul>
+                <li>
+                  <i class="fa fa-music"></i>
+                  <label class="fileContainer">
+                    <input type="file" accept="audio/*" (change)="onChange($event.target.files)" >
+                  </label>
+                </li>
+                <li>
+                  <i class="fa fa-image"></i>
+                  <label class="fileContainer">
+                    <input type="file" accept="image/*" (change)="onChange($event.target.files)" >
+                  </label>
+                </li>
+                <li>
+                  <i class="fa fa-video-camera"></i>
+                  <label class="fileContainer">
+                    <input type="file" accept="video/*" (change)="onChange($event.target.files)" >
+                  </label>
+                </li>
+                <li>
+                  <i class="fa fa-file-pdf-o"></i>
+                  <label class="fileContainer">
+                    <input type="file" accept="application/pdf" (change)="onChange($event.target.files)" >
+                  </label>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <div class="dropdown">
+                <mat-form-field appearance="fill" class="cat">
+                  <mat-label>Domaine de projet ?</mat-label>
+                  <select matNativeControl required>
+                    <option value="IOT">IOT</option>
+                    <option value="AI">AI</option>
+                    <option value="BI">BI</option>
+                    <option value="Devloppement Mobile">Devloppement Mobile</option>
+                    <option value="Devloppement Web">Devloppement Web</option>
+                    <option value="Autres">Autres</option>
+                  </select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="offerelement" ><a class="myButton" (click)="addPoste()">Publier</a>
+        </div>
+      </div>
+      <!-- repeted one -->
+      <div *ngFor="let poste of postes">
+        <div class="offercard" >
+          <div class="poster offerelement">
+            <img src="assets/postes/images/icons/user.png">
+            <span class="postername">{{poste.posteur.nom}} {{poste.posteur.prenom}}</span>
+            <span class="Etat"><i class="fa fa-line-chart fa-lg etape"></i> {{poste.etape}}</span>
+          </div>
+          <div class="offerelement ">
+            <span style="padding: 5px 0px 5px 0px;">posté le: {{poste.datePoste}}</span>
+            <br>
+            <br>
+            <div class="post-thumb-gallery" >
+              <p>{{poste.contenu}}</p>
+            </div>
+            <br>
+            <br>
+            <div class="post-thumb-gallery" *ngIf="poste.type == 'image/jpeg'">
+              <figure class="post-thumb img-popup">
+                <img src="../../assets/pieces/{{poste.fichierNom}}" alt="post image">
+              </figure>
+            </div>
+            <div class="" *ngIf="poste.type == 'application/pdf'" >
+              <figure class="">
+                <a href="poste.lien" style="text-decoration: none;text-align: center;" alt="post image" style="margin: 5px 0px 5px 0px;">clicker ici pour telecherger le document</a>
+              </figure>
+            </div>
+            <div class="post-thumb-gallery" *ngIf="poste.type == 'video/mp4'" >
+              <figure class="post-thumb img-popup">
+                <div class="embed-responsive embed-responsive-21by9">
+                  <video width="320" height="240" controls>
+                    <source src="../../assets/pieces/{{poste.fichierNom}}" type="video/mp4">
+                  </video>
+                </div>
+              </figure>
+            </div>
+            <div class="post-thumb-gallery" *ngIf="poste.type == 'audio/mpeg'" >
+              <audio width="420" height="240" controls>
+                <source src="../../assets/pieces/{{poste.fichierNom}}" type="video/mp4">
+              </audio>
+            </div>
+          </div>
+          <div class="panel-group">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="offerelement">
+                  <div class="we-video-info">
+                    <ul class="post-bare">
+                      <li>
+															<span class="views" data-toggle="tooltip" title="views">
+																<i class="fa fa-eye"></i>
+																<ins>1</ins>
+															</span>
+                      </li>
+                      <li>
+															<span class="comments" data-toggle="tooltip" title="Comments">
+																<a><i class="fa fa-comments-o"></i></a>
+																<ins>{{poste.commentaires.length}}</ins>
+															</span>
+                      </li>
+                      <li>
+															<span class="like" data-toggle="tooltip" title="like" >
+																<i class="fa fa-heart-o" (click)=" addReaction(poste,'Like')"></i>
+																<ins>{{countRactionsLike(poste)}}</ins>
+															</span>
+                      </li>
+                      <li>
+															<span class="dislike" data-toggle="tooltip" title="dislike">
+																<i class="fa fa-thumbs-o-down" (click)=" addReaction(poste,'Dislike')"></i>
+																<ins>{{countRactionsDislike(poste)}}</ins>
+															</span>
+                      </li>
+                      <li>
+                          <div class="displayitems" ><a class="Financer" (click)="this.miseAjourPoste(poste)">  Financeurs  </a></div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="panel-body">
+                  <div class="commentarea">
+                    <hr>
+                    <div>
+                      <div class="comment" *ngFor="let commente of poste.commentaires" >
+                        <br>
+                        <img class="commentimg" src="assets/postes/images/icons/comment.png" style="margin-top: -12px;">
+                        <span style="width: 200px;" class="a">{{commente.commentateur.nom}} {{commente.commentateur.prenom}} <span *ngIf="commente.commentateur.entreprise">({{commente.commentateur.entreprise}})</span></span>
+                        <br>
+                        <span style="width: 200px;" >{{commente.dateCommentaire}}</span>
+                        <span style="width: 200px;" class="card">{{commente.contenu}}</span>
+                      </div>
+                    </div>
+                    <div class="addcomment">
+                      <div class="displayitems" >
+
+                        <img class="commentimg" src="assets/postes/images/icons/user.png" style=" margin-bottom: -15px;" >
+
+                      </div>
+                      <div class="displayitems">
+                        <form>
+                          <div class="form-group ">
+                            <input class="form-control commentinput " type="text" placeholder="Ajouter un commentaire" name="commentaire" (keyup)="change($event)" >
+
+                          </div>
+                        </form>
+                      </div>
+                      <div class="displayitems" ><a class="addcommentN" id="addcomment" (click)="addCommentaire(poste.idPoste)" >Envoyer</a>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- repeted one -->
+
+
+    </div>
+
+    <div class="col-md-3" id="rightsidebar">
+
+      <div class="blocks "  >
+        <h2 > Catégories: </h2>
+      </div>
+      <div class="blocks" >
+        <div class="widget-body">
+          <ul class="like-page-list-wrapper">
+            <li class="unorder-list">
+              <!-- profile picture end -->
+              <div class="profile-thumb">
+                <a href="#">
+                  <figure class="profile-thumb-small">
+                    <img src="assets/postes/images/icons/IOT.png" alt="Cat_img" height="20" width="20">
+                  </figure>
+                </a>
+              </div>
+              <!-- profile picture end -->
+              <div class="unorder-list-info">
+                <h3 class="list-title"><a class="myClickableThingy" (click)="this.getByPosteCategorie('IOT')">IOT</a></h3>
+              </div>
+            </li>
+            <li class="unorder-list">
+              <!-- profile picture end -->
+              <div class="profile-thumb">
+                <a href="#">
+                  <figure class="profile-thumb-small">
+                    <img src="assets/postes/images/icons/IA.png" alt="Cat_img" height="20" width="20">
+                  </figure>
+                </a>
+              </div>
+              <!-- profile picture end -->
+
+              <div class="unorder-list-info">
+                <h3 class="list-title"><a class="myClickableThingy" (click)="this.getByPosteCategorie('AI')">IA</a></h3>
+              </div>
+            </li>
+            <li class="unorder-list">
+              <!-- profile picture end -->
+              <div class="profile-thumb">
+                <a href="#">
+                  <figure class="profile-thumb-small">
+                    <img src="assets/postes/images/icons/BI.png" alt="Cat_img" height="20" width="20">
+                  </figure>
+                </a>
+              </div>
+              <!-- profile picture end -->
+
+              <div class="unorder-list-info">
+                <h3 class="list-title"><a class="myClickableThingy" (click)="this.getByPosteCategorie('BI')">BI</a></h3>
+              </div>
+            </li>
+            <li class="unorder-list">
+              <!-- profile picture end -->
+              <div class="profile-thumb">
+                <a href="#">
+                  <figure class="profile-thumb-small">
+                    <img src="assets/postes/images/icons/mobile.png" alt="Cat_img" height="20" width="20">
+                  </figure>
+                </a>
+              </div>
+              <!-- profile picture end -->
+
+              <div class="unorder-list-info">
+                <h3 class="list-title"><a class="myClickableThingy" (click)="this.getByPosteCategorie('Développement Mobile')">Développement Mobile</a></h3>
+              </div>
+            </li>
+            <li class="unorder-list">
+              <!-- profile picture end -->
+              <div class="profile-thumb">
+                <a href="#">
+                  <figure class="profile-thumb-small">
+                    <img src="assets/postes/images/icons/web.png" alt="Cat_img" height="20" width="20">
+                  </figure>
+                </a>
+              </div>
+              <!-- profile picture end -->
+
+              <div class="unorder-list-info">
+                <h3 class="list-title"><a class="myClickableThingy" (click)="this.getByPosteCategorie('Développement Web')">Développement Web</a></h3>
+              </div>
+            </li>
+            <li class="unorder-list">
+              <!-- profile picture end -->
+              <div class="profile-thumb">
+                <a href="#">
+                  <figure class="profile-thumb-small">
+                    <img src="assets/postes/images/icons/other.png" alt="Cat_img" height="20" width="20">
+                  </figure>
+                </a>
+              </div>
+              <!-- profile picture end -->
+
+              <div class="unorder-list-info">
+                <h3 class="list-title"><a class="myClickableThingy" (click)="this.getByPosteCategorie('Autres')">Autres</a></h3>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
