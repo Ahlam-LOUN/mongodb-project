@@ -1,7 +1,7 @@
 import { Utilisateur } from './utilisateur';
 export class Reaction{
   idReaction: number;
-  dateReaction:String;
+  dateReaction: String;
   type: string;
-  reactif:Utilisateur;
+  reactif: Utilisateur =  new Utilisateur();
 }

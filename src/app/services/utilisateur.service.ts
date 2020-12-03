@@ -14,4 +14,8 @@ export class UtilisateurService {
   getByMail(mail: String):Observable<Utilisateur>{
     return this.http.get<Utilisateur>(this.Url+"/mail/"+mail);
   }
+
+  AjouterUtilisateur(utilisateur: Utilisateur): Observable<Utilisateur>{
+    return this.http.post<Utilisateur>(this.Url, utilisateur);
+  }
 }

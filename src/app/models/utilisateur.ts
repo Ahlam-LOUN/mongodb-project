@@ -1,16 +1,15 @@
 import { Poste } from './poste';
 export class Utilisateur{
-	active:boolean;
-	idUtilisateur:number;
-	 nom:string;
-	 datePoste:String;
-	 prenom:string;
-	 mail:string;
-	 password:string;
-	 telephone:string;
-	 universite:string;
-     niveau:string;
-     entreprise:string;
-	 postes:  Poste[] ;
-
+     idUtilisateur: number;
+     nom: string;
+	   prenom: string;
+	   mail: string;
+	   password: string;
+	   telephone: string;
+	   datePoste: String;
+	   universite: string;
+     niveau: string;
+     active: boolean;
+     entreprise: string;
+	   postes: Poste[] ;
 }

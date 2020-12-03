@@ -1,6 +1,7 @@
 import { Utilisateur } from './utilisateur';
 export class Commentaire{
-    contenu :String;
-    dateCommentaire:String;
-    commentateur: Utilisateur;
+    idCommentaire: number;
+    contenu: String;
+    commentateur: Utilisateur = new Utilisateur();
+    dateCommentaire: String;
 }

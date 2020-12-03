@@ -11,35 +11,35 @@
   <mat-dialog-content>
     <p>
       <mat-form-field>
-        <input matInput placeholder="Nom"  #username="ngModel" type="text" [(ngModel)]="user.username" name="username" required>
+        <input matInput placeholder="Nom"  #username="ngModel" type="text" [(ngModel)]="utilisateur.nom" name="username" required>
         <mat-error *ngIf="username.errors?.required">Votre nom est obligatoire</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Prénom"  #username="ngModel" type="text" [(ngModel)]="user.username" name="username" required>
+        <input matInput placeholder="Prénom"  #username="ngModel" type="text" [(ngModel)]="utilisateur.prenom" name="username" required>
         <mat-error *ngIf="username.errors?.required">Votre prénom est obligatoire</mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="E-mail"  #username="ngModel" type="text" [(ngModel)]="user.username" name="username" required>
+        <input matInput placeholder="E-mail"  #username="ngModel" type="text" [(ngModel)]="utilisateur.mail" name="username" required>
         <mat-error *ngIf="username.errors?.required">Votre Email est obligatoire</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Votre niveau"  #username="ngModel" type="text" [(ngModel)]="user.username" name="username" required>
+        <input matInput placeholder="Votre niveau"  #username="ngModel" type="text" [(ngModel)]="utilisateur.niveau" name="username" required>
         <mat-error *ngIf="username.errors?.required">Votre niveau est obligatoire</mat-error>
       </mat-form-field>
 
 
 
       <mat-form-field>
-        <input matInput placeholder="Votre Téléphone"  #username="ngModel" type="text" [(ngModel)]="user.username" name="username" required>
+        <input matInput placeholder="Votre Téléphone"  #username="ngModel" type="text" [(ngModel)]="utilisateur.telephone" name="username" required>
         <mat-error *ngIf="username.errors?.required">Votre Téléphone est obligatoire</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Si vous avez une entreprise"  #username="ngModel" type="text" [(ngModel)]="user.username" name="username" required>
+        <input matInput placeholder="Si vous avez une entreprise"  #username="ngModel" type="text" [(ngModel)]="utilisateur.entreprise" name="username" required>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Mot de passe"  #password="ngModel" type="password" [(ngModel)]="user.password" name="password" required>
+        <input matInput placeholder="Mot de passe"  #password="ngModel" type="password" [(ngModel)]="utilisateur.password" name="password" required>
         <mat-error *ngIf="password.errors?.required">Votre mot de passe est obligatoire</mat-error>
       </mat-form-field>
       <mat-checkbox [(ngModel)]="user.remember" name="remember">Remember Me</mat-checkbox>
@@ -48,6 +48,6 @@
   <mat-dialog-actions>
     <span class="flex-spacer"></span>
     <button mat-button mat-dialog-close>Cancel</button>
-    <button type="submit" [disabled]="loginForm.form.invalid" mat-button class="background-primary text-floral-white"  >Login</button>
+    <button mat-dialog-close [disabled]="loginForm.form.invalid" mat-button class="background-primary text-floral-white" (click)="AjouterUtilisateur()" >Login</button>
   </mat-dialog-actions>
 </form>
