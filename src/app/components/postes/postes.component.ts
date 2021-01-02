@@ -23,34 +23,33 @@ export class PostesComponent implements OnInit {
   file: File;
   commentaire: Commentaire = new Commentaire();
   reaction: Reaction = new Reaction();
-  reactif: Utilisateur = new Utilisateur();
   currentUser: Utilisateur = new Utilisateur();
-  commentateur: Utilisateur = new Utilisateur();
+
 
   constructor(private router: Router, private _lightbox: Lightbox, private posteservice: PosteService, private Utilisateurservice: UtilisateurService
   , private commentaireservce: CommentaireService, private reactionservice: ReactionService) {
     this.postes = new Array<Poste>();
   }
   ngOnInit(): void {
-    this.Utilisateurservice.getByMail(localStorage.getItem('connectedUser')).subscribe((data) => {
-      this.currentUser = data;
-      this.poste.posteur =  this.currentUser;
-      this.commentaire.commentateur = data;
-    });
     this.getAllPostes();
     this.getUtilisateurActive();
+    this.Utilisateurservice.getByMail(localStorage.getItem('connectedUser')).subscribe((data) => {
+      this.currentUser = data;
+      this.commentaire.commentateur.idUtilisateur = data.idUtilisateur;
+      this.reaction.reactif.idUtilisateur = data.idUtilisateur;
+      this.poste.posteur =  this.currentUser;
+    });
   }
   onfileChange(files: FileList) {
     this.file = files.item(0);
   }
 
-  // @ts-ignore
     addPoste(){
-    this.poste.etape ='poster';
+    this.poste.etape ='Posté';
     this.posteservice.addPoste(this.poste, this.file);
     this.ngOnInit()
   }
-  // @ts-ignore
+
     domaineChange(event){
     this.poste.categorie = event.target.value;
 
@@ -120,9 +119,7 @@ export class PostesComponent implements OnInit {
   addReaction(poste:Poste,type:string){
     if (this.VerifierReactif(poste) == "pas"){
       this.reaction.type= type;
-      console.log(this.currentUser);
-      this.reactif.idUtilisateur = this.currentUser.idUtilisateur;
-      this.reaction.reactif = this.reactif;
+      console.log(this.reaction.reactif.idUtilisateur);
       this.reactionservice.addReaction(poste.idPoste,this.reaction).subscribe((data)=>{
         this.ngOnInit();
         console.log("aucune reaction"+data);
@@ -139,8 +136,6 @@ export class PostesComponent implements OnInit {
         console.log("else else");
         // ajouter recation
         this.reaction.type= type;
-        this.reactif.idUtilisateur = this.currentUser.idUtilisateur;
-        this.reaction.reactif = this.reactif;
         this.reactionservice.addReaction(poste.idPoste,this.reaction).subscribe((data)=>{
           this.ngOnInit();
           console.log("ajout when data =! type"+data);
@@ -157,8 +152,6 @@ export class PostesComponent implements OnInit {
     console.log("verifierReaction");
     let res = "pas"
     for(let r of poste.reactions){
-      console.log(r.reactif.idUtilisateur);
-      console.log(this.currentUser.idUtilisateur);
       if(r.reactif.idUtilisateur == this.currentUser.idUtilisateur){
         res= r.type;
         localStorage.setItem('idReaction',''+r.idReaction);
@@ -166,5 +159,8 @@ export class PostesComponent implements OnInit {
       }
     }
     return res;
+  }
+  toProfil(){
+    this.router.navigate(['profil']);
   }
 }

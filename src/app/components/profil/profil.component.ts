@@ -48,7 +48,9 @@ export class ProfilComponent implements OnInit {
 
   ///ctte methode fait apelle au methode addposte dans posteservice
   addPoste(){
-    this.posteservice.addPoste(this.currentUser.idUtilisateur,this.poste,this.file);
+    this.poste.etape ='poster';
+    this.posteservice.addPoste(this.poste, this.file);
+    this.ngOnInit()
   }
   change(event) {
 

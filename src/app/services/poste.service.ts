@@ -13,7 +13,10 @@ export class PosteService {
   constructor(private http: HttpClient) { }
 
 
-  /*cette methode permet de recupere tous les utilisateurs*/
+  ///cette methode ermet de recupere les postes par posteur
+  getPostesByMail(mail: String):Observable<Array<Poste>>{
+    return this.http.get<Array<Poste>>(this.Url+"/mail/"+mail);
+  }
 
   /*cette methode ermet de recupere tous les postes*/
  getAllPostes(): Observable<Array<Poste>>{

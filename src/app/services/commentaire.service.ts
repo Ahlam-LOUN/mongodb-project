@@ -12,10 +12,10 @@ export class CommentaireService {
   constructor(private http: HttpClient) { }
 
  addCommentaire(idPoste: number, commentaire: Commentaire): Observable<Commentaire> {
-   return this.http.post<Commentaire>(this.UrlCommentaire + '/' + idPoste, commentaire);
+   return this.http.post<Commentaire>(this.UrlCommentaire + '/idPoste/' + idPoste, commentaire);
  }
   deleteCommentaire(idCommentaire: number): Observable<boolean>{
-    return this.http.delete<boolean>(this.UrlCommentaire + '/' + idCommentaire);
+    return this.http.delete<boolean>(this.UrlCommentaire + '/id/' + idCommentaire);
   }
   updateCommentaire(commentaire: Commentaire): Observable<Commentaire>{
     return this.http.put<Commentaire>(this.UrlCommentaire, commentaire);
